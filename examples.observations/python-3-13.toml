@@ -1,6 +1,6 @@
 # Written by `ascribe observe`. Don't edit it by hand.
 version = 1
-ascribe = "0.3.0"
+ascribe = "0.3.1"
 command = "python -m pytest -q"
 
 [environment]
