@@ -1,0 +1,51 @@
+# Tests the examples under each Python the observations name, checks that
+# every observation still matches the examples, and builds the docs. It writes
+# no observation: run `ascribe observe` yourself and commit the result.
+name: Examples
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Weekly, so a new Python or a change in a dependency that breaks an example
+  # is found here, and GitHub tells the repository's owner.
+  schedule:
+    - cron: "23 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (Python ${{ matrix.python }})
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.13"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The release in .ascribe-version, with Ascribe's install script: no Node.
+      - name: Install ascribe
+        run: |
+          curl -fsSL https://ascribed-dev.com/install.sh | sh -s -- --version "$(cat .ascribe-version)" --to "$RUNNER_TEMP/bin"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      # Fails when an example changed after its last test run: run
+      # `ascribe observe --name <name>` under that Python, and commit.
+      - name: Check the observations
+        run: |
+          ascribe observe --check --name python-3-12
+          ascribe observe --check --name python-3-13
+      - run: ascribe check --deny-warnings --config docs
+      - run: ascribe build --config docs
