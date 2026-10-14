@@ -1,0 +1,15 @@
+# Written by `ascribe observe`. Don't edit it by hand.
+version = 1
+ascribe = "0.3.1"
+command = "python -m pytest -q"
+
+[environment]
+os = "linux"
+arch = "x64"
+python = "Python 3.12.3"
+
+[files]
+"examples/greet.out.txt" = "sha256-lf:231462024105beaa2d3fcc21f4f29a2a2768328bb8bdb514e37ce65914552cec"
+"examples/greet.py" = "sha256-lf:d1a3264489094f30fa2c062c1f988241e258369e52454f0803767cc4e5fb0e69"
+"examples/order_total.out.txt" = "sha256-lf:4f7ed91425ce27af7e35bdd01507248f0c742a8f0be600ceb5efa3e99389d5bf"
+"examples/order_total.py" = "sha256-lf:89a5f84358afbb83b0e6a59d7d2bcfd40eb90ad05a9eca09ea01160a159da892"

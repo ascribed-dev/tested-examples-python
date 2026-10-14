@@ -1,0 +1,11 @@
+# Which files are examples, relative to this folder: each example and the
+# output it prints. A change to any of them makes its observations stale.
+include = ["examples/**"]
+
+# The line of shell that tests them: run each example and compare what it
+# prints with its output file.
+test = "python -m pytest -q"
+
+# What to note about where the test ran. A page says "Tested with" each.
+[environment]
+python = { label = "Python", command = "python --version" }

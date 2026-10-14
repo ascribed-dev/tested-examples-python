@@ -1,0 +1,13 @@
+# The docs: an Ascribe project whose pages show the examples in this
+# repository, from the folder above. Each code block says what its example
+# was tested with, from examples.observations/.
+spec = "0.1"
+
+[project]
+content-root = "content"
+
+# The repository's root, where ascribe.examples.toml is. Only the examples
+# are readable from the pages.
+[sources.code]
+path = ".."
+include = ["examples/**"]
